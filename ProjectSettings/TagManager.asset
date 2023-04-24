@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemies/Enemy
+  - Turrents/Turret
+  - Logic/GameController
+  - UI/HUD
+  - Logic/WaveController
+  - Enemies/SpawnZone
   layers:
   - Default
   - TransparentFX
