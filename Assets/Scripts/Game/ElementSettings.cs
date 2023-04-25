@@ -5,12 +5,7 @@ using UnityEngine;
 public class ElementSettings
 {
     //Type Enum
-    public enum Type
-    {
-        Fire,
-        Water,
-        Grass
-    }
+   
     [Header("Element Settings")]
     public Type Element;
     public Material ElementMaterial;
