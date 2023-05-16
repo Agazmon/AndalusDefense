@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 6683535035961075270}
   - component: {fileID: 6683535035961075269}
   - component: {fileID: 1594468826}
+  - component: {fileID: 6332839400686716740}
+  - component: {fileID: 5624093965483356384}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemies/Enemy
@@ -128,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HealthPoints:
-    currentValue: 0
+    currentValue: 1
     maxValue: 0
     initValue: 0
     autoUpdateRate: 0
@@ -136,7 +138,7 @@ MonoBehaviour:
     autoUpdate: 0
     icon: {fileID: 0}
   Speed:
-    currentValue: 0
+    currentValue: 10
     maxValue: 0
     initValue: 0
     autoUpdateRate: 0
@@ -145,17 +147,54 @@ MonoBehaviour:
     icon: {fileID: 0}
   Element:
     Element: 0
-    ElementMaterial: {fileID: 0}
-    StrongAgainstElement: 0
-    WeakAgaisntElement: 0
-  DisableOnDeath: 0
+    ElementMaterial: {fileID: 2100000, guid: b46c777da92813c4a8489caa22fa0afa, type: 2}
+    StrongAgainstElement: 2
+    WeakAgaisntElement: 1
+  Attack: {fileID: 6225379901110354784, guid: 7a4bf1064537e2040a80bf416e38d325, type: 3}
+  MaxLevelAttack: {fileID: 6225379901110354784, guid: cb62077c936784340be408865ff85085, type: 3}
+  AttackRange: 45
   CurrentLevel: 1
   MaxLevel: 10
-  LevelModifier: 1.1
-  Attack: {fileID: 0}
-  MaxLevelAttack: {fileID: 0}
-  AttackRange: 0
+  HPPerLevel: 5
+  AttackPerLevel: 1
   DeathSound: {fileID: 0}
   AttackSound: {fileID: 0}
   OnDeath: {fileID: 0}
   OnAttack: {fileID: 0}
+--- !u!114 &6332839400686716740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6683535035961075268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d77ee14a0a0068743b44e0c31cab667a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentStatus: 0
+  stopThreshold: 1
+  DroppedResource: {fileID: 2048535968625305972, guid: 025e8b5eb858b474d9d2918e8e22dc34, type: 3}
+--- !u!195 &5624093965483356384
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6683535035961075268}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 10
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

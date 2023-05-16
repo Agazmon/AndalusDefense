@@ -47,6 +47,14 @@ public class Indicator
    {
         this.autoUpdate = newState;
    }
+
+    public IEnumerator AutoUpdateStart()
+    {
+        while (autoUpdate) { 
+            yield return new WaitForSeconds(UpdateRateSeconds);
+            CurrentValue += autoUpdateRate;
+        }
+    }
    
 
     //Eventos para detectar cambios en el indicador

@@ -35,10 +35,10 @@ public class WaveController : MonoBehaviour
                 SpawnPoints.Add(gameObject);
         if (SpawnPoints.Count == 0)
             Debug.LogError("Error: No hay SpawnArea en la Escena");
-        StartWave();
+        StartCoroutine(StartWave());
 
     }
-    public void StartWave()
+    public IEnumerator StartWave()
     {
         CurrentWave++;
         //INCREMENTOS DE RONDA
@@ -47,19 +47,6 @@ public class WaveController : MonoBehaviour
         if (CurrentWave % SpawnIncrementRoundCooldown == 0)
             EnabledSpawns += 1;
         BaseEnemySpawn += EnemyCountAdd;
-        /**if (EnabledSpawns <= SpawnPoints.Count) {
-            int currentlyEnabled = 0;
-            while (currentlyEnabled < EnabledSpawns) {
-                // Elegir uno de la lista
-                int tryEnable = Random.Range(0, SpawnPoints.Count + 1);
-                // Mirar si está habilitado
-                if (!SpawnPoints[tryEnable].activeSelf) {
-                    // Si no lo está habilitarlo e incrementar el contador
-                    SpawnPoints[tryEnable].SetActive(true);
-                    currentlyEnabled++;
-                }
-            }
-        }*/
         double[] EnemiesPerSpawnPoint = GenerateRandomNormalizedArray(EnabledSpawns);
         bool[] ActivePoints = GenerateRandomActivePoints(EnabledSpawns);
 
@@ -70,15 +57,18 @@ public class WaveController : MonoBehaviour
 
             if (ActivePoints[i])
             {
+                yield return new WaitUntil(() => SpawnPoints[i].GetComponent<Spawner>().isLoaded);
                 SpawnPoints[i].GetComponent<Spawner>().Spawn(TypeUtils.GetRandomType(), (int) System.Math.Round(EnemiesPerSpawnPoint[count] * BaseEnemySpawn), CurrentWave);
                 count++;
             }
 
         }
+        yield return null;
     }
     public void FinishWave()
     {
         //TODO Avisar gameController
+        StartCoroutine(StartWave());
     }
     public void RemoveEnemy(Stats enemyRemoved)
     {

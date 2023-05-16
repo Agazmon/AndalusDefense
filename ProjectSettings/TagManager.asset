@@ -10,14 +10,17 @@ TagManager:
   - UI/HUD
   - Logic/WaveController
   - Enemies/SpawnZone
+  - Scene/Objective
+  - Player/Attack
+  - Enemies/Attack
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Enemies
   - Water
   - UI
-  - 
+  - EnemiesAttack
   - 
   - 
   - 

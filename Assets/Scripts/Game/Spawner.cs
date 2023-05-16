@@ -7,19 +7,23 @@ public class Spawner : MonoBehaviour
     [Header("Spawn Status")]
     public int PendingToSpawn = 0;
     [Header("Enemy Settings")]
-    public Type SpawnType;
+    public ElementType SpawnType;
     public int EnemyLevel;
     public GameObject EnemyPrefab;
     //Internal
     private MeshCollider meshCollider;
     private WaveController waveController;
+
+    public bool isLoaded=false;
     
     private void Start()
     {
+        isLoaded = false;
         meshCollider = GetComponent<MeshCollider>();
         waveController = GameObject.FindGameObjectWithTag("GameController").GetComponent<WaveController>();
+        isLoaded = true;
     }
-    public void Spawn(Type ElementType, int EnemiesToSpawn, int level)
+    public void Spawn(ElementType ElementType, int EnemiesToSpawn, int level)
     {
         Debug.Log("Turret:" + gameObject.name + "Element:" + ElementType + " EnemiesToSpawn:" + EnemiesToSpawn + " level:" + level);
         PendingToSpawn = EnemiesToSpawn;

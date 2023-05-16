@@ -7,26 +7,26 @@ public class ElementSettings
     //Type Enum
    
     [Header("Element Settings")]
-    public Type Element;
+    public ElementType Element;
     public Material ElementMaterial;
     [Space(5)]
     [Header("Strong Against Element - 1.5x Damage")]
-    public Type StrongAgainstElement;
+    public ElementType StrongAgainstElement;
     float StrongAgainsModifier = 1.5f;
     [Space(5)]
     [Header("Weak Against Element - 0.5x Damage")]
-    public Type WeakAgaisntElement;
+    public ElementType WeakAgaisntElement;
     float WeakAgainsModifier = .5f;
     
     public float GetElementCooldownModifier()
     {
         switch (Element)
         {
-            case Type.Fire:
+            case ElementType.Fire:
                 return 1.5f;
-            case Type.Grass:
+            case ElementType.Grass:
                 return 1.0f;
-            case Type.Water:
+            case ElementType.Water:
                 return 0.5f;
             default:
                 return 1.0f;
