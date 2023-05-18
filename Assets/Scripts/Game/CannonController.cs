@@ -20,7 +20,8 @@ public class CannonController : MonoBehaviour
     public Stats WaterStats;
 
     [Header("Cannon Status")]
-    public CannonStatus currentStatus = CannonStatus.DISABLED;
+    [SerializeField]
+    private CannonStatus currentStatus = CannonStatus.DISABLED;
     [Header("Objective Settings")]
     public List<GameObject> inRangeEnemies;
     public GameObject selectedEnemy;
@@ -28,6 +29,7 @@ public class CannonController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentStatus = CannonStatus.DISABLED;
         //Cargo las stats del cannon
         foreach(Stats stats in GetComponents<Stats>())
         {
@@ -50,19 +52,18 @@ public class CannonController : MonoBehaviour
             float distance = Vector3.Distance(transform.position, selectedEnemy.transform.position);
 
             // If the player is within range, and it has been at least fireInterval seconds since the last fire, fire a shot.
-            if (distance <= activeStats.AttackRange && (currentStatus != CannonStatus.DISABLED && currentStatus != CannonStatus.SHOOTING))
+            if (distance <= activeStats.AttackRange && currentStatus == CannonStatus.IDLE)
             {
                 currentStatus = CannonStatus.SHOOTING;
                 StartCoroutine(Shoot());
             }
             PerformRotation();
         }
-        else
-            selectNewEnemy();
     }
     public void ChangeStatus(CannonStatus newStatus)
     {
         this.currentStatus = newStatus;
+        selectNewEnemy();
     }
     public void AddInRangeEnemy(GameObject enemyToAdd)
     {
@@ -80,12 +81,14 @@ public class CannonController : MonoBehaviour
     }
     public void selectNewEnemy()
     {
+        if (currentStatus == CannonStatus.DISABLED) return;
         //If there is any enemy in range, we select one randomly.
         if (inRangeEnemies.Count > 0)
         {
             int ind = Random.Range(0, inRangeEnemies.Count);
             selectedEnemy = inRangeEnemies[ind];
-            if (selectedEnemy == null) selectNewEnemy();
+            if (selectedEnemy == null) currentStatus = CannonStatus.IDLE;
+
         }
         else
             currentStatus = CannonStatus.IDLE;

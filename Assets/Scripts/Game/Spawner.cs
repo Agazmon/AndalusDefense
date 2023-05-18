@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Spawner : MonoBehaviour
 {
@@ -39,6 +40,9 @@ public class Spawner : MonoBehaviour
             GameObject spawned = Instantiate(EnemyPrefab,GetRandomPointInsideSpawnArea(), Quaternion.identity, this.transform);
             //TODO esto se debe hacer en el wave controller
             waveController.Enemies.Add(spawned.GetComponent<Stats>());
+            spawned.GetComponent<NavMeshAgent>().SetDestination(this.gameObject.transform.GetChild(0).transform.position);
+            spawned.GetComponent<EnemyController>().SetTarget(this.gameObject.transform.GetChild(1).transform.position);
+
         }
         PendingToSpawn -= enemiesToSpawn;
         yield return new WaitForSeconds(Random.Range(1, 4));

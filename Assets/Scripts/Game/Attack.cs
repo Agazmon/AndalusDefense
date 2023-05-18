@@ -13,12 +13,10 @@ public class Attack : MonoBehaviour
     public GameObject ImpactVFX;
     [Header("Hierarchy Settings")]
     public CannonController parent;
-    public void Start()
+
+    private void Start()
     {
-        if (Model != null)
-        {
-            //TODO Set model on start
-        }
+        Destroy(this.gameObject, 4f);
     }
     private IEnumerator OnCollisionEnter(Collision collision)
     {

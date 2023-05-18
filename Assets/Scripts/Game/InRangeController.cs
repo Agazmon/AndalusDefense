@@ -11,12 +11,18 @@ public class InRangeController : MonoBehaviour
         parent = this.transform.parent.GetChild(0).GetComponent<CannonController>();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Enemies/Enemy"))
             parent.AddInRangeEnemy(collision.gameObject);
     }
-    private void OnCollisionExit(Collision collision)
+
+   /* private void OnTriggerStay(Collider collision)
+    {
+        if (collision.gameObject.CompareTag("Enemies/Enemy"))
+            parent.AddInRangeEnemy(collision.gameObject);
+    }*/
+    private void OnTriggerExit(Collider collision)
     {
         if (collision.gameObject.CompareTag("Enemies/Enemy"))
             parent.RemoveInRangeEnemy(collision.gameObject);

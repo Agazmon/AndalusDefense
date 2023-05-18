@@ -23,17 +23,15 @@ public class EnemyController : MonoBehaviour
     //Private Resources
     private WaveController waveController;
     private Stats stats;
+    public Vector3 shootingTarget;
   
     
     // Start is clled before the first frame update
     void Start()
     {
-        objectivePosition = GameObject.FindGameObjectWithTag("Scene/Objective").transform.position;
         agent = GetComponent<NavMeshAgent>();
         stats = GetComponent<Stats>();
         waveController = GameObject.FindGameObjectWithTag("GameController").GetComponent<WaveController>();
-
-        agent.SetDestination(new Vector3(objectivePosition.x, transform.position.y, objectivePosition.y));
         agent.speed = stats.Speed.CurrentValue;
         agent.stoppingDistance = stats.AttackRange;
     }
@@ -41,20 +39,23 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RotateTowards(objectivePosition);
+        RotateTowards(shootingTarget);
         if (agent.remainingDistance - agent.stoppingDistance <= stopThreshold && (currentStatus != EnemyStatus.SHOOTING && currentStatus != EnemyStatus.DEAD))
         {
             currentStatus = EnemyStatus.SHOOTING;
             StartCoroutine(Shoot());
         }
     }
-
+    public void SetTarget(Vector3 target)
+    {
+        this.shootingTarget = target;
+    }
    
     private IEnumerator Shoot()
     {
         while (currentStatus == EnemyStatus.SHOOTING) { 
-            GameObject instantiatedAttack = Instantiate(stats.Attack, transform.position+(Vector3.forward*1.3f), Quaternion.identity);
-            instantiatedAttack.GetComponent<Rigidbody>().AddForce((transform.forward* 40 + Vector3.up*10), ForceMode.Impulse);
+            GameObject instantiatedAttack = Instantiate(stats.Attack, transform.position+(Vector3.forward*3f), Quaternion.identity);
+            instantiatedAttack.GetComponent<Rigidbody>().AddForce((transform.forward* (Random.Range(30.0f, 45.0f)) + Vector3.up*Random.Range(10.0f,15.0f)), ForceMode.Impulse);
             yield return new WaitForSeconds(stats.Attack.GetComponent<Attack>().BaseCooldown);
         }
     }
